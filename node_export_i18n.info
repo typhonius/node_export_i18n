@@ -1,5 +1,6 @@
 name = Node Export i18n Integration
 description = Tiny glue module that fixes some node_export nuances when importing translated nodes.
 core = 7.x
+package = "Node export"
 dependencies[] = i18n
 dependencies[] = node_export

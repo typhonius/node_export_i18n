@@ -4,3 +4,35 @@
  * @file Node Export i18n module
  */
 
+
+// Ensure this node type has multilingual support
+
+/**
+ * Implements hook_node_export_alter
+ *
+ * The point of this is to alter the tnid of the output to be that of the original node
+ */
+function node_export_i18n_node_export_alter(&$nodes, $format) {
+
+}
+
+/**
+ * Implements hook_node_export_after_import_alter
+ *
+ * Exists to update tnids in the {node} table to link translated nodes
+ */
+function node_export_i18n_node_export_after_import_alter(&$nodes, $format, $save) {
+  // load nodes 
+  foreach ($nodes as $node) {
+    // check translation status of node type (drupal static)
+    if ($node->tnid) {
+      db_update('node')
+      ->fields(array(
+        'tnid' => $node->tnid,
+      ))
+      ->condition('nid', $node->nid)
+      ->execute();     
+    }
+  } 
+  // no example code
+}
