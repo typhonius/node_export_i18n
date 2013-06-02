@@ -13,7 +13,9 @@
  * The point of this is to alter the tnid of the output to be that of the original node
  */
 function node_export_i18n_node_export_alter(&$nodes, $format) {
-
+  foreach ($nodes as $index) {
+    $index->tnid = $index->tnid ?: $index->nid;
+  }
 }
 
 /**
@@ -30,7 +32,7 @@ function node_export_i18n_node_export_after_import_alter(&$nodes, $format, $save
       ->fields(array(
         'tnid' => $node->tnid,
       ))
-      ->condition('nid', $node->nid)
+      ->condition('nid', $node->tnid)
       ->execute();     
     }
   } 
